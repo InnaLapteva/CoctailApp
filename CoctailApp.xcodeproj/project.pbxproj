@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		01351F932409819600C45BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351F922409819600C45BEF /* AppDelegate.swift */; };
 		01351F952409819600C45BEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351F942409819600C45BEF /* SceneDelegate.swift */; };
-		01351F972409819600C45BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351F962409819600C45BEF /* ViewController.swift */; };
 		01351F9A2409819600C45BEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01351F982409819600C45BEF /* Main.storyboard */; };
 		01351F9C2409819B00C45BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01351F9B2409819B00C45BEF /* Assets.xcassets */; };
 		01351F9F2409819B00C45BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01351F9D2409819B00C45BEF /* LaunchScreen.storyboard */; };
+		01351FA7240982B400C45BEF /* CoctailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FA6240982B400C45BEF /* CoctailsViewController.swift */; };
+		01351FA9240982D700C45BEF /* CoctailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FA8240982D700C45BEF /* CoctailCell.swift */; };
+		01351FAB2409831600C45BEF /* Coctail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FAA2409831600C45BEF /* Coctail.swift */; };
+		01351FAD2409A4B200C45BEF /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FAC2409A4B200C45BEF /* DetailedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		01351F8F2409819600C45BEF /* CoctailApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoctailApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01351F922409819600C45BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01351F942409819600C45BEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		01351F962409819600C45BEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		01351F992409819600C45BEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01351F9B2409819B00C45BEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01351F9E2409819B00C45BEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01351FA02409819B00C45BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01351FA6240982B400C45BEF /* CoctailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailsViewController.swift; sourceTree = "<group>"; };
+		01351FA8240982D700C45BEF /* CoctailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailCell.swift; sourceTree = "<group>"; };
+		01351FAA2409831600C45BEF /* Coctail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coctail.swift; sourceTree = "<group>"; };
+		01351FAC2409A4B200C45BEF /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +64,11 @@
 			children = (
 				01351F922409819600C45BEF /* AppDelegate.swift */,
 				01351F942409819600C45BEF /* SceneDelegate.swift */,
-				01351F962409819600C45BEF /* ViewController.swift */,
 				01351F982409819600C45BEF /* Main.storyboard */,
+				01351FAC2409A4B200C45BEF /* DetailedViewController.swift */,
+				01351FA6240982B400C45BEF /* CoctailsViewController.swift */,
+				01351FAA2409831600C45BEF /* Coctail.swift */,
+				01351FA8240982D700C45BEF /* CoctailCell.swift */,
 				01351F9B2409819B00C45BEF /* Assets.xcassets */,
 				01351F9D2409819B00C45BEF /* LaunchScreen.storyboard */,
 				01351FA02409819B00C45BEF /* Info.plist */,
@@ -138,9 +147,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01351F972409819600C45BEF /* ViewController.swift in Sources */,
+				01351FA7240982B400C45BEF /* CoctailsViewController.swift in Sources */,
+				01351FA9240982D700C45BEF /* CoctailCell.swift in Sources */,
+				01351FAD2409A4B200C45BEF /* DetailedViewController.swift in Sources */,
 				01351F932409819600C45BEF /* AppDelegate.swift in Sources */,
 				01351F952409819600C45BEF /* SceneDelegate.swift in Sources */,
+				01351FAB2409831600C45BEF /* Coctail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
