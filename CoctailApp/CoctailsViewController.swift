@@ -23,7 +23,14 @@ class CoctailsViewController: UICollectionViewController {
         super.viewDidLoad()
         activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
-        fetchData()
+       // fetchData()
+        NetManager.netManager.fetchData(from: jsonUrl) { (receiveDrinks) in
+            DispatchQueue.main.async {
+                self.receivedDrinks = receiveDrinks
+                self.collectionView.reloadData()
+                
+            }
+        }
     }
     
     // MARK: UICollectionViewDataSource
@@ -35,44 +42,35 @@ class CoctailsViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CoctailCell
-        
         let coctail = receivedDrinks.drinks[indexPath.item]
-        //cell.configure(with: coctail)
         cell.label.text = coctail.strDrink
-        cell.label.numberOfLines = 0
+        cell.configure(with: coctail)
         
-        DispatchQueue.global().async {
-            guard let url = URL(string: coctail.strDrinkThumb) else {return}
-            guard let imageData = try? Data(contentsOf: url) else {return}
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                cell.imageOfCoctail.image = UIImage(data: imageData)
-            }
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
         }
-        
+
         return cell
     }
-       
+    
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let coctail = receivedDrinks.drinks[indexPath.item]
         performSegue(withIdentifier: "DetailedSegue", sender: coctail)} 
     
     // MARK: Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any? ) {
         if segue.identifier == "DetailedSegue" {
-        let dvc = segue.destination as! DetailedViewController
+            let dvc = segue.destination as! DetailedViewController
             dvc.coctail = sender as? Coctail
-
         }
     }
-    
-    
+
     //MARK: Private method
     
-    func fetchData() {
+    private func fetchData() {
         guard let url = URL(string: jsonUrl) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, _, _) in
@@ -85,7 +83,7 @@ class CoctailsViewController: UICollectionViewController {
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-               // print(self.receivedDrinks)
+                // print(self.receivedDrinks)
             } catch let error {
                 print(error.localizedDescription)
             }

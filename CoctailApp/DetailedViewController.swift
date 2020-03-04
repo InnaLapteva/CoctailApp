@@ -18,19 +18,23 @@ class DetailedViewController: UIViewController {
     
     
     var coctail: Coctail!
-    
     var detailedJSON: String = ""
-    
-    // private var receivedDrink: Drinks = Drinks(drinks: [Coctail(strDrink: "", strDrinkThumb: "", idDrink: "", strAlcoholic: "", strInstructions: "", strIngredient1: "", strIngredient2: "", strIngredient3: "", strIngredient4: "", strIngredient5: "", strIngredient6: "")])
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         namelabel.text = coctail.strDrink
         detailedJSON = getDetailedJson()
-        fetchData()
+        //fetchData()
         fetchImage()
-    }
+        NetManager.netManager.fetchData(from: detailedJSON) { (reciveDrink) in
+            DispatchQueue.main.async {
+                self.coctail = reciveDrink.drinks.first
+            self.instructionLabel.text = "Instruction: \(reciveDrink.drinks.first?.strInstructions ?? "not found")"
+            self.alcoLabel.text = reciveDrink.drinks.first?.strAlcoholic
+            self.ingridientsLabel.text = "Ingridients: \(reciveDrink.drinks.first?.ingredients ?? "not found")"
+        }
+       
+        } }
     
     //MARK: Private methods
     private func getDetailedJson() -> String {
@@ -42,7 +46,7 @@ class DetailedViewController: UIViewController {
         
     }
     
-    func fetchData() {
+    private func fetchData() {
         guard let url = URL(string: detailedJSON) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, _, _) in
@@ -56,8 +60,6 @@ class DetailedViewController: UIViewController {
                     self.alcoLabel.text = receivedDrink.drinks.first?.strAlcoholic
                     self.ingridientsLabel.text = "Ingridients: \(receivedDrink.drinks.first?.ingredients ?? "not found")"
                 }
-               
-                //print(receivedDrink)
             } catch let error {
                 print(error.localizedDescription)
             }

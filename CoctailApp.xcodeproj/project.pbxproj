@@ -16,6 +16,7 @@
 		01351FA9240982D700C45BEF /* CoctailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FA8240982D700C45BEF /* CoctailCell.swift */; };
 		01351FAB2409831600C45BEF /* Coctail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FAA2409831600C45BEF /* Coctail.swift */; };
 		01351FAD2409A4B200C45BEF /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FAC2409A4B200C45BEF /* DetailedViewController.swift */; };
+		01351FB1240FE9C600C45BEF /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01351FB0240FE9C600C45BEF /* NetManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		01351FA8240982D700C45BEF /* CoctailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailCell.swift; sourceTree = "<group>"; };
 		01351FAA2409831600C45BEF /* Coctail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coctail.swift; sourceTree = "<group>"; };
 		01351FAC2409A4B200C45BEF /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
+		01351FB0240FE9C600C45BEF /* NetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				01351F982409819600C45BEF /* Main.storyboard */,
 				01351FAC2409A4B200C45BEF /* DetailedViewController.swift */,
 				01351FA6240982B400C45BEF /* CoctailsViewController.swift */,
+				01351FB0240FE9C600C45BEF /* NetManager.swift */,
 				01351FAA2409831600C45BEF /* Coctail.swift */,
 				01351FA8240982D700C45BEF /* CoctailCell.swift */,
 				01351F9B2409819B00C45BEF /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01351FB1240FE9C600C45BEF /* NetManager.swift in Sources */,
 				01351FA7240982B400C45BEF /* CoctailsViewController.swift in Sources */,
 				01351FA9240982D700C45BEF /* CoctailCell.swift in Sources */,
 				01351FAD2409A4B200C45BEF /* DetailedViewController.swift in Sources */,
