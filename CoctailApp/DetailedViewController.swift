@@ -24,9 +24,10 @@ class DetailedViewController: UIViewController {
         super.viewDidLoad()
         namelabel.text = coctail.strDrink
         detailedJSON = getDetailedJson()
-        //fetchData()
-        fetchImage()
-        NetManager.netManager.fetchData(from: detailedJSON) { (reciveDrink) in
+        
+        NetManagerWithURLSession.shared.fetchImage(from: coctail.strDrinkThumb, for: imageOfCoctail)
+        
+        NetManagerWithURLSession.shared.fetchData(from: detailedJSON) { (reciveDrink) in
             DispatchQueue.main.async {
                 self.coctail = reciveDrink.drinks.first
             self.instructionLabel.text = "Instruction: \(reciveDrink.drinks.first?.strInstructions ?? "not found")"
@@ -44,47 +45,6 @@ class DetailedViewController: UIViewController {
         print(detailedJson)
         return detailedJson
         
-    }
-    
-    private func fetchData() {
-        guard let url = URL(string: detailedJSON) else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
-            guard let data = data else { return }
-            
-            let decoder = JSONDecoder()
-            do {
-                let receivedDrink = try decoder.decode(Drinks.self, from: data)
-                DispatchQueue.main.async {
-                    self.instructionLabel.text = "Instruction: \(receivedDrink.drinks.first?.strInstructions ?? "not found")"
-                    self.alcoLabel.text = receivedDrink.drinks.first?.strAlcoholic
-                    self.ingridientsLabel.text = "Ingridients: \(receivedDrink.drinks.first?.ingredients ?? "not found")"
-                }
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }.resume()
-        
-    }
-    
-    private func fetchImage() {
-        
-        guard let url = URL(string: coctail.strDrinkThumb) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            if let error = error { print(error); return }
-            if let response = response { print(response) }
-            
-            if let data = data, let image = UIImage(data: data) {
-                
-                DispatchQueue.main.async {
-                    
-                    self.imageOfCoctail.image = image
-                }
-            }
-        }.resume()
-        // resume запускает задачу datatask
     }
 
 }

@@ -7,14 +7,14 @@
 //
 
 import UIKit
-
+import Alamofire
 
 
 class CoctailsViewController: UICollectionViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var receivedDrinks: Drinks = Drinks(drinks: [Coctail(strDrink: "", strDrinkThumb: "", idDrink: "", strAlcoholic: "", strInstructions: "", strIngredient1: "", strIngredient2: "", strIngredient3: "", strIngredient4: "", strIngredient5: "", strIngredient6: "")])
+    private var receivedDrinks: Drinks?
     
     private let jsonUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
     
@@ -23,41 +23,50 @@ class CoctailsViewController: UICollectionViewController {
         super.viewDidLoad()
         activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
-       // fetchData()
-        NetManager.netManager.fetchData(from: jsonUrl) { (receiveDrinks) in
-            DispatchQueue.main.async {
-                self.receivedDrinks = receiveDrinks
-                self.collectionView.reloadData()
-                
-            }
-        }
+        fetchDataAlamofire()
+//        NetManagerWithURLSession.shared.fetchData(from: jsonUrl) { (receiveDrinks) in
+//            DispatchQueue.main.async {
+//                self.receivedDrinks = receiveDrinks
+//                self.collectionView.reloadData()
+//            }
+//        }
     }
     
     // MARK: UICollectionViewDataSource
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return receivedDrinks.drinks.count
+        guard let coctails = receivedDrinks?.drinks else {return 0}
+        return coctails.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CoctailCell
-        let coctail = receivedDrinks.drinks[indexPath.item]
-        cell.label.text = coctail.strDrink
-        cell.configure(with: coctail)
+        let coctail = receivedDrinks?.drinks[indexPath.item]
+        cell.label.text = coctail?.strDrink
+        cell.configure(with: coctail ?? Coctail(strDrink: "",
+                                                strDrinkThumb: "",
+                                                idDrink: "",
+                                                strAlcoholic: "",
+                                                strInstructions: "",
+                                                strIngredient1: "",
+                                                strIngredient2: "",
+                                                strIngredient3: "",
+                                                strIngredient4: "",
+                                                strIngredient5: "",
+                                                strIngredient6: ""))
         
         DispatchQueue.main.async {
             self.activityIndicator.stopAnimating()
         }
-
+        
         return cell
     }
     
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let coctail = receivedDrinks.drinks[indexPath.item]
+        let coctail = receivedDrinks?.drinks[indexPath.item]
         performSegue(withIdentifier: "DetailedSegue", sender: coctail)} 
     
     // MARK: Navigation
@@ -67,27 +76,44 @@ class CoctailsViewController: UICollectionViewController {
             dvc.coctail = sender as? Coctail
         }
     }
-
-    //MARK: Private method
     
-    private func fetchData() {
-        guard let url = URL(string: jsonUrl) else {return}
+    //MARK: Privet methods
+    private func fetchDataAlamofire() {
         
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
-            guard let data = data else { return }
-            
-            let decoder = JSONDecoder()
-            do {
-                self.receivedDrinks = try decoder.decode(Drinks.self, from: data)
-                
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+        request(jsonUrl).validate().responseJSON { (dataResponse) in
+            switch dataResponse.result {
+            case .success(let value):
+                print(value)
+                guard let jsonData = value as? Array<[String : Array<[String : Any]>]> else {return print("not working")} //[[String : Any]] = Array<[String : Any]>
+                print(jsonData)
+                for coctailDict in jsonData {
+                    
+//                    let coctail = Coctail(strDrink: coctailDict["strDrink"] as? String ?? "",
+//                                          strDrinkThumb: coctailDict["strDrinkThumb"] as? String ?? "",
+//                                          idDrink: coctailDict["idDrink"] as? String ?? "",
+//                                          strAlcoholic: coctailDict["strAlcoholic"] as? String,
+//                                          strInstructions: coctailDict["strInstructions"] as? String,
+//                                          strIngredient1: coctailDict["strIngredient1"] as? String,
+//                                          strIngredient2: coctailDict["strIngredient2"] as? String,
+//                                          strIngredient3: coctailDict["strIngredient3"] as? String,
+//                                          strIngredient4: coctailDict["strIngredient4"] as? String,
+//                                          strIngredient5: coctailDict["strIngredient5"] as? String,
+//                                          strIngredient6: coctailDict["strIngredient6"] as? String)
+//
+//                    self.receivedDrinks?.drinks.append(coctail)
+                    
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                 }
-                // print(self.receivedDrinks)
-            } catch let error {
-                print(error.localizedDescription)
+                
+            case .failure(let error):
+                print(error)
             }
-        }.resume()
+            
+        }
+        
+        
     }
 }
 
